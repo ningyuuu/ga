@@ -3,8 +3,8 @@
 knapsack.py - CS6515, Intro to Graduate Algorithms, Spring 2024
 
 Implement a Dynamic Programming Solution to the knapsack problem.   The program will be given a
-dictionary of items and an overall weight limit.  It should select the combination of items 
-which achieves the highest value without exceeding the weight limit.    
+dictionary of items and an overall weight limit.  It should select the combination of items
+which achieves the highest value without exceeding the weight limit.
 
 About the Input:
 
@@ -36,7 +36,7 @@ def initTable(numItems, maxWeight):
     """
     # TODO Replace the following with your code to initialize the table properly
 
-    T = [0][0]
+    T = [[0 for _ in range(maxWeight + 1)] for _ in range(numItems + 1)]
     return T
 
 
@@ -50,7 +50,7 @@ def defineItemRange(numItems):
     """
     # TODO Replace the following with your code to define the range of values
 
-    return range(0)
+    return range(1, numItems + 1)
 
 
 def defineWeightRange(maxWeight):
@@ -61,7 +61,7 @@ def defineWeightRange(maxWeight):
     """
     # TODO Replace the following with your code to define the range of values
 
-    return range(0)
+    return range(1, maxWeight + 1)
 
 
 def subProblem(T, weight, itemIDX, itemWeight, itemValue):
@@ -73,7 +73,13 @@ def subProblem(T, weight, itemIDX, itemWeight, itemValue):
         itemWeight : the weight of the item
         itemValue : the value of the item
     """
-    # TODO Replace the following with your code to solve the subproblem appropriately
+    if weight < itemWeight:
+        subproblem_value = T[itemIDX - 1][weight]
+    else:
+        subproblem_value = max(
+            T[itemIDX - 1][weight - itemWeight] + itemValue,
+            T[itemIDX - 1][weight],
+        )
 
     return subproblem_value
 
@@ -85,11 +91,25 @@ def buildResultList(T, itemsDict, maxWeight):
         itemsDict : dictionary of items   Note: items are indexed 1..N
         maxWeight : maximum weight allowed
 
-    	result: a list composed of item tuples
+        result: a list composed of item tuples
     """
     result = []
 
-    # TODO Your code goes here to build the list of chosen items
+    # start at the last row, and go upwards
+    curr_item = len(T) - 1
+    curr_idx = len(T[0]) - 1
+
+    while curr_item > 0:
+        item_tuple = itemsDict[curr_item]
+        _, item_weight, item_value = item_tuple
+
+        without_item_val = T[curr_item-1][curr_idx]
+        if without_item_val == T[curr_item][curr_idx]:
+            curr_item -= 1
+        else:
+            curr_item -= 1
+            curr_idx -= item_weight
+            result.append(item_tuple)
 
     return result
 
