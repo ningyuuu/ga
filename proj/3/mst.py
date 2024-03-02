@@ -33,14 +33,28 @@ class unionFind:
             Be sure to maintain self.rank as needed to
             make sure your algorithm is optimal.
         """
-        #TODO Your Code Goes Here
+        r_u = self.find(u)
+        r_v = self.find(v)
+
+        if r_u == r_v: # they are already a single union set
+            return
+
+        if self.rank[r_u] > self.rank[r_v]: # since r_u has a higher rank, we attach r_v to r_u
+            self.pi[r_v] = r_u
+
+        else: # either r_v has a higher rank or they are the same rank. either way we attach r_u to r_v
+            self.pi[r_u] = r_v
+            if self.rank[r_u] == self.rank[r_v]: # if they were the same rank, r_v must rank up
+                self.rank[r_v] += 1
 
     def find(self, p):
         """
             find the root of the set containing the
             passed vertex p - Must use path compression!
         """
-        #TODO Your Code Goes Here
+        if p != self.pi[p]:
+            self.pi[p] = self.find(self.pi[p]) # recursively reassign roots along the way
+        return self.pi[p]
 
 def kruskal(G):
     """
@@ -53,12 +67,13 @@ def kruskal(G):
     MST = set()
     #Go through edges in sorted order smallest, to largest
     for e in G.sortedEdges():
-        #TODO Your Code Goes Here (remove comments if you wish)
 
-        # use the following line to add an edge to the MST.
-        # You may change it's indentation/scope within the code
-        # but do not otherwise modify it
+        u, v = e
 
+        if uf.find(u) == uf.find(v):
+            continue
+
+        uf.union(u, v)
         MST.add(util.buildMSTEdge(G,e))
 
         #TODone - do not modify any other code below this line
