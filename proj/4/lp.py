@@ -16,28 +16,48 @@ def objectiveFunction():
     ''' Return the coefficients of the objective function as a list of values
         e.g.:  minimize -x - 2y would be represented as [-1, -2]'''
     # TODO Your code goes here
-    return None
+    return [21, 16, 371, 346, 884]
     # TODone End of Your code
 
 def constraintsA():
     ''' Return the coeffcients matrix A for the constraints.
         You should return a list of lists, e.g.: [ [1,2], [-1,0] ]'''
     # TODO Your code goes here
-    return None
+    return [
+        [-0.85, -1.62, -12.78,  -8.39,    0],
+        [-0.33, -0.20, -1.58,   -1.39, -100],
+        [ 0.33,  0.20,  1.58,    1.39,  100],
+        [-4.64, -2.37, -74.69, -80.70,    0],
+        [    9,     8,      7, 508.20,    0],
+        [  -.5,    .5,     .5,    -.5,  -.5]
+    ]
     # TODone End of Your code
 
 def constraintsB():
     ''' Return the coeffcients vector B for the constraints
         You should return a one-dimensional list of values like [29,77,-42]'''
     # TODO Your code goes here
-    return None
+    return [
+        -15,
+        -2,
+        6,
+        -4,
+        100,
+        0
+    ]
     # TODone End of Your code
 
 def bounds():
     ''' return the lower & upper bounds for your variables
         You should return a one-dimensional list of tuples'''
     # TODO Your code goes here
-    return None
+    return [
+        (0, None),
+        (0, None),
+        (0, None),
+        (0, None),
+        (0, None),
+    ]
     # TODone End of Your code
 
 #DO NOT MODIFY ANY CODE BELOW THIS LINE
